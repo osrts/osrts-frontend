@@ -1,0 +1,145 @@
+<div class="ui active huge inverted text loader" *ngIf="!loaded">Chargement</div>
+<div class="results-container results-no-padding-no-margin" *ngIf="loaded">
+  <div class="ui basic segment results-no-padding-no-margin">
+    <div class="ui fluid segment results-no-padding-no-margin" *ngIf="results">
+      <h1 class="ui centered header first-letter-capitalized">{{momentDate.format("dddd")}}</h1>
+      <table class="ui celled compact center aligned unstackable table">
+        <thead>
+          <tr>
+            <th class="one wide"><strong>#</strong></th>
+            <th class="one wide" *ngIf="isConnected">Tag</th>
+            <th>Nom</th>
+            <th>Equipe</th>
+            <th class="two wide hidden-desktop">Temps</th>
+            <th class="three wide hidden-mobile" *ngFor="let checkpoint of checkpoints">
+              <div class="ui checkbox">
+                <input type="checkbox" [attr.name]="checkpoint.title" (change)="changeCheckpoint(checkpoint.num)">
+                <label>{{checkpoint.title}}</label>
+              </div>
+            </th>
+        </tr>
+      </thead>
+        <tbody>
+          <tr *ngFor="let result of results">
+            <td>
+              {{result.number}}
+              <span [ngSwitch]="result.number">
+                <i class="gold-text large trophy icon" *ngSwitchCase="1"></i>
+                <i class="argent-text large trophy icon" *ngSwitchCase="2"></i>
+                <i class="bronze-text large trophy icon" *ngSwitchCase="3"></i>
+              </span>
+            </td>
+            <td *ngIf="isConnected">
+                <span class="ui image label" [ngClass]="{'yellow': result.tag.color == 'Orange', 'blue': result.tag.color == 'Bleu'}" style="width: 100px !important">
+                  {{result.tag.num}}
+                </span>
+            </td>
+            <td>
+              {{result.name}}
+            </td>
+            <td>
+              {{result.team_name}}
+            </td>
+            <td *ngFor="let checkpoint of checkpoints" class="hidden-mobile">
+              <span *ngIf="result.times[checkpoint.num] && result.times[checkpoint.num].timeMoment.hours()!=0">
+                {{result.times[checkpoint.num].timeMoment.format('H:mm:ss')}} ({{result.times[checkpoint.num].speed}}km/h)
+              </span>
+              <span *ngIf="result.times[checkpoint.num] && result.times[checkpoint.num].timeMoment.hours()==0">
+                {{result.times[checkpoint.num].timeMoment.format('mm:ss')}} ({{result.times[checkpoint.num].speed}}km/h)
+              </span>
+            </td>
+            <td class="hidden-desktop">
+              <span *ngIf="result.times[99] && result.times[99].timeMoment.hours()!=0">
+                {{result.times[99].timeMoment.format('H:mm:ss')}} ({{result.times[99].speed}}km/h)
+              </span>
+              <span *ngIf="result.times[99] && result.times[99].timeMoment.hours()==0">
+                {{result.times[99].timeMoment.format('mm:ss')}} ({{result.times[99].speed}}km/h)
+              </span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th *ngIf="isConnected"></th>
+            <th><div class="ui fluid input"><input type="text" name="name" [(ngModel)]="filters['nameFilter']"></div></th>
+            <th><div class="ui fluid input"><input type="text" name="team_name" [(ngModel)]="filters['teamNameFilter']"></div></th>
+            <!-- <th></th> -->
+            <th class="hidden-mobile" *ngFor="let checkpoint of checkpoints | slice:0:checkpoints.length-1"></th>
+            <th><button class="ui primary button" (click)="find()">Chercher</button></th>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="ui basic right aligned segment">
+        <div class="ui pagination menu" *ngIf="nbPages>1">
+          <a class="icon item" (click)="changePage(currentPage-1)">
+            <i class="left chevron icon"></i>
+          </a>
+          <a class="item" href="javascript:;" (click)="changePage(1)" [class.black-text]="currentPage==1">
+            1
+          </a>
+          <span class="item" *ngIf="currentPage>3">...</span>
+          <a class="item" href="javascript:;" *ngIf="currentPage>2" (click)="changePage(currentPage-1)" >
+            {{currentPage-1}}
+          </a>
+          <a class="item black-text" href="javascript:;" *ngIf="currentPage>1 && currentPage < nbPages">
+            {{currentPage}}
+          </a>
+          <a class="item" href="javascript:;" *ngIf="currentPage < nbPages-1" (click)="changePage(currentPage+1)">
+            {{currentPage+1}}
+          </a>
+          <span class="item" *ngIf="currentPage<=nbPages-3">...</span>
+          <a class="item" href="javascript:;" *ngIf="nbPages>1" (click)="changePage(nbPages)" [class.black-text]="currentPage==nbPages">
+            {{ nbPages }}
+          </a>
+          <a class="icon item" (click)="changePage(currentPage+1)">
+            <i class="right chevron icon"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ui basic segment" *ngIf="lastResult['times']">
+        <h2 class="ui centered header">Dernier temps</h2>
+        <table class="ui celled padded compact center aligned unstackable table">
+          <tbody>
+            <tr>
+              <td>
+                {{lastResult.number}}
+                <span [ngSwitch]="lastResult.number">
+                  <i class="gold-text large trophy icon" *ngSwitchCase="1"></i>
+                  <i class="argent-text large trophy icon" *ngSwitchCase="2"></i>
+                  <i class="bronze-text large trophy icon" *ngSwitchCase="3"></i>
+                </span>
+              </td>
+              <td>
+                {{lastResult.name}}
+              </td>
+              <td>
+                {{lastResult.team_name}}
+              </td>
+              <td *ngFor="let checkpoint of checkpoints" class="hidden-mobile">
+                <span *ngIf="lastResult.times[checkpoint.num] && lastResult.times[checkpoint.num].timeMoment.hours()!=0">
+                  {{lastResult.times[checkpoint.num].timeMoment.format('H:mm:ss')}}
+                </span>
+                <span *ngIf="lastResult.times[checkpoint.num] && lastResult.times[checkpoint.num].timeMoment.hours()==0">
+                  {{lastResult.times[checkpoint.num].timeMoment.format('mm:ss')}}
+                </span>
+              </td>
+              <td class="hidden-desktop">
+                <span *ngIf="lastResult.times[99] && lastResult.times[99].timeMoment.hours()!=0">
+                  {{lastResult.times[99].timeMoment.format('H:mm:ss')}}
+                </span>
+                <span *ngIf="lastResult.times[99] && lastResult.times[99].timeMoment.hours()==0">
+                  {{lastResult.times[99].timeMoment.format('mm:ss')}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ui segment" *ngIf="!results">
+      <h1 class="ui centered header">Pas encore de résultats pour {{momentDate.format("dddd")}}</h1>
+    </div>
+    <a [routerLink]="['/']" class="ui left floated button">Retour accueil</a>
+  </div>
+</div>

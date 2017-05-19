@@ -1,0 +1,30 @@
+
+  <div class="ui middle aligned center aligned grid full-height">
+    <div class="column">
+        <div class="ui segment">
+          <form class="ui large form" (ngSubmit)="signIn()">
+          <h2 class="ui header page-title">
+              Connexion à l'espace admin
+          </h2>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="user icon"></i>
+              <input class="email" [(ngModel)]="user.email" type="email" name="email" placeholder="Adresse email" required>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="lock icon"></i>
+              <input class="password" [(ngModel)]="user.password" type="password" name="password" placeholder="Mot de passe" required>
+            </div>
+          </div>
+          <!-- <div class="ui fluid large teal submit button">Login</div> -->
+          <button class="ui fluid large teal submit button" type="submit">Se connecter</button>
+        </form>
+      </div>
+      <div class="ui negative message" *ngIf="error.title">
+        <h3 class="ui header">{{ error.title }}</h3>
+        {{error.message}}
+      </div>
+    </div>
+  </div>

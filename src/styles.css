@@ -1,0 +1,147 @@
+/* You can add global styles to this file, and also import other style files */
+
+.white-text {
+    color: white !important;
+}
+
+.black-text {
+  color: black !important;
+}
+
+.grey-text {
+    color: rgb(200,200,200) !important;
+}
+
+.gold-text {
+   	color: #D4AF37 !important;
+}
+
+.argent-text {
+  color: #C0C0C0 !important;
+}
+
+.bronze-text {
+  color: #cd7f32 !important;
+}
+
+.page-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.dimmed-background {
+    min-height: 100% !important;
+    background: rgba(17, 19, 20, 0.7);
+    /*background: rgba(217, 219, 220, 0.5);*/
+}
+
+body {
+    /*margin-top: -17.5px !important;
+    padding: 0 !important;*/
+    height:100% !important;
+    background: url("assets/background2.jpg") no-repeat center center fixed !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important;
+}
+
+a {
+   outline: 0;
+}
+
+.is-active {
+    color: #FF851B !important;
+    /*color: #CC6309 !important;*/
+}
+
+.first-letter-capitalized::first-letter {
+  text-transform:capitalize !important;
+}
+
+/* Self-explanatory */
+.full-height {
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nearly-full-height {
+  height: 80% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* For beautiful transitions ! */
+.start-hidden {
+  display: none !important;
+}
+
+.custom-disabled {
+  color: rgba(40,40,40,.3) !important;
+}
+
+.mobile-menu {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 100 !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.minimal-full-page {
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.behind {
+  z-index: 20 !important;
+}
+
+/* MENU */
+@media (max-width: 765px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 765px) {
+  .hidden-desktop {
+    display: none !important;
+  }
+}
+
+.configuration{
+    text-align: left;
+    background-color: #282c34;
+    color: #98b04d;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.results-container {
+  display: block;
+  max-width: 100%;
+}
+
+@media only screen and (min-width: 1200px){
+  .results-container {
+    width: 1127px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+  }
+}
+
+@media (max-width: 765px) {  
+  .results-no-padding-no-margin {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+  }
+}

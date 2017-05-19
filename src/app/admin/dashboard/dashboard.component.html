@@ -1,0 +1,201 @@
+<div class="ui container">
+  <div class="ui active huge inverted text loader" *ngIf="!race">Chargement</div>
+  <div class="ui stackable grid">
+
+    <!--
+    ##############
+    BEGIN FIRST ROW
+    ##############
+    -->
+    <div class="row">
+
+      <!--
+      ##############
+      BEGIN STEPS
+      ##############
+      -->
+      <div class="center aligned sixteen wide column">
+        <div class="ui steps">
+          <div class="step step-create-race" [class.active]="!race || !race.to"
+                            [class.completed]="race && race.to">
+            <i class="calendar icon"></i>
+            <div class="content">
+              <div class="title">Créer une course</div>
+              <div class="description"></div>
+            </div>
+          </div>
+          <div class="step step-import-runners" [class.disabled]="!race || !race.to"
+                            [class.active]="race && race.to && !race['counts']"
+                            [class.completed]="race && race['counts']">
+            <i class="users icon"></i>
+            <div class="content">
+              <div class="title">Importer les coureurs</div>
+            </div>
+          </div>
+          <div class="step step-assign-tags" [class.disabled]="!race || !race['counts']"
+                            [class.active]="race && race['counts'] && !tagsAssigned"
+                            [class.completed]="tagsAssigned">
+            <i class="tags icon"></i>
+            <div class="content">
+              <div class="title">Assigner les tags aux coureurs</div>
+            </div>
+          </div>
+          <div class="step step-start-waves" [class.disabled]="!tagsAssigned && !wavesLaunched"
+                            [class.active]="tagsAssigned && !wavesLaunched"
+                            [class.completed]="wavesLaunched">
+            <i class="announcement icon"></i>
+            <div class="content">
+              <div class="title">Lancer les vagues</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--
+      ##############
+      END STEPS
+      ##############
+      -->
+    </div>
+    <!--
+    ##############
+    END FIRST ROW
+    ##############
+    -->
+
+
+    <!--
+    ##############
+    BEGIN SECOND ROW
+    ##############
+    -->
+    <div class="centered row">
+
+      <!--
+      ##############
+      BEGIN RACE DETAILS
+      ##############
+      -->
+      <div class="ten wide column">
+        <div class="ui segments" *ngIf="race && race.to">
+          <div class="ui center aligned segment">
+            <h2 class="ui centered header" *ngIf="race.to < now">Dernière course</h2>
+            <h2 class="ui centered header" *ngIf="race.to > now && race.from < now">Course en cours</h2>
+            <h2 class="ui centered header" *ngIf="race.from > now">Course à venir</h2>
+          </div>
+          <div class="ui segment">
+            <div class="ui equal width divided grid">
+              <div class="column" *ngFor="let day of days">
+                <h1 class="ui centered header brown first-letter-capitalized">{{day.dayOfWeek}}<br/>{{day.date}}</h1>
+              </div>
+            </div>
+          </div>
+          <div class="ui center aligned segment" *ngIf="race.from > now">
+            Commence dans <strong>{{race.from | amDifference: today :'days' : false}}</strong> jours
+          </div>
+        </div>
+        <div class="ui center aligned segment" *ngIf="!race || !race.to">
+          <h1 class="ui header">Pas de course prévue !</h1>
+          <p>Commencez à utiliser l'application en créant une course.</p>
+            <button class="ui primary button" [routerLink]=" ['races'] ">Créer une course</button>
+      </div>
+    </div>
+    <!--
+    ##############
+    END RACE DETAILS
+    ##############
+    -->
+
+    <!--
+    ##############
+    BEGIN QUICK ACCESS
+    ##############
+    -->
+    <div class="six wide column" *ngIf="race && race.to">
+      <div class="ui center aligned segment">
+        <h2 class="ui header">Opérations</h2>
+        <div class="ui equal width centered grid">
+          <div class="column">
+            <button name="import-runners" class="ui button" (click)="importRunners()" [class.primary]="!race['counts']">
+              Importer coureurs
+            </button>
+          </div>
+          <div class="column">
+            <button name="import-times" class="ui button" (click)="importTimes()" [class.primary]="!race['counts']">
+              Importer temps
+            </button>
+          </div>
+          <div class="column">
+            <button name="export-waves" class="ui button" [ngClass]="{'loading': generatingPdf}" (click)="generatePDF()">Exporter vague(s)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--
+    ##############
+    END QUICK ACCESS
+    ##############
+    -->
+
+  </div>
+  <!--
+  ##############
+  END SECOND ROW
+  ##############
+  -->
+
+  <!--
+  ##############
+  BEGIN THIRD ROW
+  ##############
+  -->
+  <div class="centered row"  *ngIf="race && race['counts']">
+    <!--
+    ##############
+    BEGIN CHART FOR RUNNERS
+    ##############
+    -->
+    <div class="five wide column">
+      <div class="ui center aligned segment">
+        <h2 class="ui header">Participants</h2>
+        <div class="ui basic segment">
+          <canvas baseChart
+            [data]="pieChartRunnersData"
+            [labels]="pieChartRunnersLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <!--
+    ##############
+    END CHART FOR RUNNERS
+    ##############
+    -->
+
+    <!--
+    ##############
+    BEGIN CHART FOR WAVES
+    ##############
+    -->
+    <div class="eleven wide column">
+      <div class="ui center aligned segment" *ngIf="barChartWavesLabels && barChartWavesLabels.length>0">
+        <h2 class="ui header">Vagues</h2>
+        <div class="ui basic segment">
+          <canvas baseChart
+            [datasets]="barChartWavesData"
+            [labels]="barChartWavesLabels"
+            [chartType]="barChartType"
+            [options]="barChartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
+  ##############
+  END CHART FOR WAVES
+  ##############
+  -->
+</div>
+</div>

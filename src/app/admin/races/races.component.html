@@ -1,0 +1,80 @@
+<div class="ui active huge inverted text loader" *ngIf="!race">Chargement</div>
+<div class="ui container full-height" *ngIf="race">
+  <div class="ui one column stackable middle aligned grid full-height">
+    <div class="column">
+      <h1 class="ui centered header white-text" *ngIf="dateTo < now">Dernière course</h1>
+      <h1 class="ui centered header white-text" *ngIf="dateTo > now && dateFrom < now">Course en cours</h1>
+      <h1 class="ui centered header white-text" *ngIf="dateFrom > now">Course à venir</h1>
+      <div class="ui centered brown card" *ngIf="dateFrom">
+        <div class="content">
+            <h2 class="ui center aligned brown dividing header race-place">{{race.place}}</h2>
+        </div>
+        <div class="image">
+          <img src="assets/logo_big_black.png">
+        </div>
+        <div class="center aligned content">
+          <div class="description">
+            <div class="ui two column grid">
+              <div class="column">
+                <h3 class="ui center brown aligned header first-letter-capitalized ">
+                  {{ dateFrom | amDateFormat:'dddd'}} <br/> <span class="race-from">{{ dateFrom | amDateFormat:'DD-MM-YYYY' }}</span>
+                </h3>
+              </div>
+              <div class="column">
+                <h3 class="ui center brown aligned header first-letter-capitalized">
+                  {{ dateTo | amDateFormat:'dddd'}} <br/> <span class="race-to">{{ dateTo | amDateFormat:'DD-MM-YYYY' }}</span>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="ui animated fade bottom attached button edit-race" [class.disabled]="action!=''" (click)="clickOpenForm('edit')">
+          <div class="hidden content"><i class="edit icon"></i></div>
+          <div class="visible content">Modifier</div>
+        </button>
+      </div>
+      <!-- Create new race button -->
+      <div class="ui basic center aligned vertical segment" id="segment-button">
+        <button class="ui primary big button create-race" (click)="clickOpenForm('add')">Créer une nouvelle course</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="ui modal modal-race">
+  <div class="header">
+      <h2 class="ui centered header" *ngIf="action=='add'">Nouvelle course</h2>
+      <h2 class="ui centered header" *ngIf="action=='edit'">Modification</h2>
+  </div>
+  <div class="content">
+    <form class="ui form" (submit)="submitForm($event)" name="formRace">
+      <div class="inline field">
+        <label>Lieu</label>
+        <input type="text" name="place" placeholder="Lieu" [(ngModel)]="raceToBeModified.place" required>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Du</label>
+          <input type="text" name="from" placeholder="JJ-MM-AAAA" [(ngModel)]="raceToBeModified.from" required>
+        </div>
+        <div class="eight wide field">
+          <label>au</label>
+          <input type="text" name="to" placeholder="JJ-MM-AAAA" [(ngModel)]="raceToBeModified.to" required>
+        </div>
+      </div>
+      <div class="field" *ngIf="action=='add'">
+        <div class="ui checkbox">
+          <input type="checkbox" [(ngModel)]="hasChecked"  name="hasChecked">
+          <label>Toutes les données de la course précédente seront supprimées</label>
+        </div>
+      </div>
+      <div class="ui basic center aligned segment">
+        <button name="cancel" type="button" class="ui big button" (click)="clickCancel()">Annuler</button>
+        <button name="create" type="submit" class="ui primary big button" [class.disabled]="!hasChecked" *ngIf="action=='add'">Créer</button>
+        <button name="edit" type="submit" class="ui primary big button" *ngIf="action=='edit'">Modifier</button>
+      </div>
+    </form>
+  </div>
+</div>

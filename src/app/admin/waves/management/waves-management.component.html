@@ -1,0 +1,53 @@
+<div class="ui container">
+  <!-- <div *ngIf="waves && waves.length>0">
+    <button class="ui button first-letter-capitalized" *ngFor="let day of days" (click)="changeDate(day.date)"
+    [class.primary]="dateChosen==day.date">
+      {{day.dayOfWeek}}
+    </button>
+  </div> -->
+  <app-day-chooser (changeDateEmitter)="changeDate($event)"></app-day-chooser>
+  <div class="ui basic fluid center aligned segment" *ngIf="!waves || waves.length==0">
+    <div class="ui segment" *ngIf="waves.length==0">
+      <h1 class="ui header">Pas de vagues</h1>
+      <button class="ui primary button" [routerLink]=" ['../dashboard'] ">Importer les coureurs sur la page d'accueil</button>
+    </div>
+  </div>
+  <table class="ui celled unstackable compact table" *ngIf="waves.length>0">
+    <thead>
+    <tr>
+        <th class="three wide">Type</th>
+        <th class="two wide">N°</th>
+        <th class="two wide">Nombre de participants</th>
+        <th class="two wide">Chronométrage</th>
+        <th class="center aligned six wide">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let wave of waves">
+        <td><div class="ui horizontal label first-letter-capitalized" [class.red]="wave.type=='compet'" [class.green]="wave.type=='fun'">{{wave.type}}</div></td>
+        <td>{{wave.num}}</td>
+        <td>{{wave.count}}</td>
+        <td>
+          <i class="green checkmark big icon" *ngIf="wave.chrono==true"></i>
+          <i class="red remove big icon" *ngIf="!wave.chrono"></i>
+        </td>
+        <td class="center aligned">
+          <button class="ui button edit" (click)="child.load(wave)"><i class="edit icon"></i> Modifier</button>
+          <button class="ui button red remove" (click)="remove(wave._id)"><i class="remove icon"></i> Supprimer</button>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot class="full-width">
+    <tr>
+        <th></th>
+        <th colspan="5">
+            <div class="ui right floated small primary labeled icon button add-wave" (click)="child.load(null)">
+                <i class="plus icon"></i> Ajouter
+            </div>
+        </th>
+    </tr>
+    </tfoot>
+  </table>
+</div>
+
+<app-modal-wave #child>

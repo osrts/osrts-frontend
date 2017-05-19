@@ -1,0 +1,119 @@
+
+<!-- MOBILE MENU -->
+<div class="ui inverted fluid segment mobile-menu hidden-desktop" id="mobile-menu">
+  <div class="ui two column inverted grid full-height">
+    <div class="column">
+      <div class="ui fluid labeled icon vertical inverted massive menu">
+        <a class="item" [routerLink]=" ['dashboard'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="home icon"></i>
+          Accueil
+        </a>
+        <a class="item" [routerLink]=" ['waves-launcher'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="announcement icon"></i>
+          Départs
+        </a>
+        <a class="item" [routerLink]=" ['runners'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="users icon"></i>
+          Participants
+        </a>
+        <a class="item" [routerLink]=" ['waves-management'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="street view icon"></i>
+          Vagues
+        </a>
+        <a class="item" [routerLink]=" ['results'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="hourglass full icon"></i>
+          Résultats
+        </a>
+        <a class="item" (click)="hideMobileMenu()">
+          <i class="undo icon"></i>
+          Retour
+        </a>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui fluid labeled icon vertical inverted massive menu">
+        <a class="item" [routerLink]=" ['races'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="calendar icon"></i>
+          Événement
+        </a>
+        <a class="item" [routerLink]=" ['checkpoints'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="marker icon"></i>
+          Checkpoints
+        </a>
+        <a class="item" [routerLink]=" ['tags'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="tags icon"></i>
+          Tags
+        </a>
+        <a class="item" [routerLink]=" ['times'] " [routerLinkActive]="['is-active']" (click)="hideMobileMenu()">
+          <i class="wait icon"></i>
+          Live
+        </a>
+        <a class="item" (click)="signOut()">
+          <i class="sign out icon"></i>
+          Déconnexion
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END OF MOBILE MENU -->
+
+<!-- GRID OF THE PAGE -->
+<div class="ui grid minimal-full-page">
+  <!-- COMPUTER AND TABLET MENU -->
+  <div class="one wide large screen two wide tablet two wide computer column hidden-mobile minimal-full-page">
+    <div class="ui inverted vertical labeled icon menu minimal-full-page">
+      <a class="item" [routerLink]=" ['dashboard'] " [routerLinkActive]="['is-active']">
+        <i class="home icon"></i>
+        Accueil
+      </a>
+      <a class="item" [routerLink]=" ['races'] " [routerLinkActive]="['is-active']">
+        <i class="calendar icon"></i>
+        Événement
+      </a>
+      <a class="item" [routerLink]=" ['runners'] " [routerLinkActive]="['is-active']">
+        <i class="users icon"></i>
+        Participants
+      </a>
+      <a class="item" [routerLink]=" ['tags'] " [routerLinkActive]="['is-active']">
+        <i class="tags icon"></i>
+        Tags
+      </a>
+      <a class="item" [routerLink]=" ['waves-management'] " [routerLinkActive]="['is-active']">
+        <i class="street view icon"></i>
+        Vagues
+      </a>
+      <a class="item" [routerLink]=" ['waves-launcher'] " [routerLinkActive]="['is-active']">
+        <i class="announcement icon"></i>
+        Départs
+      </a>
+      <a class="item" [routerLink]=" ['results'] " [routerLinkActive]="['is-active']">
+        <i class="hourglass full icon"></i>
+        Résultats
+      </a>
+      <a class="item" [routerLink]=" ['checkpoints'] " [routerLinkActive]="['is-active']">
+        <i class="marker icon"></i>
+        Checkpoints
+      </a>
+      <a class="item" [routerLink]=" ['times'] " [routerLinkActive]="['is-active']">
+        <i class="wait icon"></i>
+        Live
+      </a>
+      <a class="item" (click)="signOut()">
+        <i class="sign out icon"></i>
+        Déconnexion
+      </a>
+    </div>
+  </div>
+  <!-- END OF COMPUTER AND TABLET MENU -->
+
+  <!-- MAIN CONTENT -->
+  <div class="fifteen wide large screen fourteen wide computer fourteen wide tablet sixteen wide mobile centered column behind">
+    <div class="ui basic segment">
+      <button class="ui fluid primary button hidden-desktop" (click)="showMobileMenu()">Menu</button>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+  <!-- END OF CONTENT -->
+</div>
+<!-- END OF GRID -->

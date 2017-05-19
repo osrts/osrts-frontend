@@ -1,0 +1,27 @@
+<div class="ui basic right aligned segment">
+  <div class="ui pagination menu" *ngIf="nbPages>1">
+    <a class="icon item" (click)="changePage(currentPage-1)">
+      <i class="left chevron icon"></i>
+    </a>
+    <a class="item" href="javascript:;" (click)="changePage(1)" [class.black-text]="currentPage==1">
+      1
+    </a>
+    <span class="item" *ngIf="currentPage>3">...</span>
+    <a class="item" href="javascript:;" *ngIf="currentPage>2" (click)="changePage(currentPage-1)" >
+      {{currentPage-1}}
+    </a>
+    <a class="item black-text" href="javascript:;" *ngIf="currentPage>1 && currentPage < nbPages">
+      {{currentPage}}
+    </a>
+    <a class="item" href="javascript:;" *ngIf="currentPage < nbPages-1" (click)="changePage(currentPage+1)">
+      {{currentPage+1}}
+    </a>
+    <span class="item" *ngIf="currentPage<=nbPages-3">...</span>
+    <a class="item" href="javascript:;" *ngIf="nbPages>1" (click)="changePage(nbPages)" [class.black-text]="currentPage==nbPages">
+      {{ nbPages }}
+    </a>
+    <a class="icon item" (click)="changePage(currentPage+1)">
+      <i class="right chevron icon"></i>
+    </a>
+  </div>
+</div>

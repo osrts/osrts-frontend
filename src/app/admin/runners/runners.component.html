@@ -1,0 +1,186 @@
+<div class="ui container">
+  <!-- <div *ngIf="runners">
+    <button class="ui button first-letter-capitalized" *ngFor="let day of days" (click)="changeDay(day.index)" [class.primary]="day.index==dateIndex">
+      {{day.dayOfWeek}}
+    </button>
+  </div> -->
+  <app-day-chooser (changeDateEmitter)="changeDate($event)"></app-day-chooser>
+
+  <div class="ui basic fluid center aligned segment" *ngIf="!runners">
+    <div class="ui segment">
+      <h1 class="ui header">Pas de coureurs</h1>
+      <button class="ui primary button" [routerLink]=" ['../dashboard'] ">Importer les coureurs sur la page d'accueil</button>
+    </div>
+  </div>
+  <table class="ui striped compact unstackable table" *ngIf="runners">
+    <thead>
+      <tr class="center aligned">
+        <!-- SORTING -->
+        <th class="three wide">
+          <a href="javascript:;" class="black-text" class="sort-name"
+          [class.right]="isThisColumnSort('name')" [class.labeled]="isThisColumnSort('name')" [class.icon]="isThisColumnSort('name')"
+          (click)="clickColumn('name')">
+            Nom
+            <i class="sort descending icon" *ngIf="isThisColumnSort('name') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('name') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="one wide">
+          <a href="javascript:;" class="black-text"
+          [class.right]="isThisColumnSort('gender')" [class.labeled]="isThisColumnSort('gender')" [class.icon]="isThisColumnSort('gender')"
+          (click)="clickColumn('gender')">
+            Sexe
+            <i class="sort descending icon" *ngIf="isThisColumnSort('gender') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('gender') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="one wide">
+          <a href="javascript:;" class="black-text sort-age"
+          [class.right]="isThisColumnSort('age')" [class.labeled]="isThisColumnSort('age')" [class.icon]="isThisColumnSort('age')"
+          (click)="clickColumn('age')">
+            Âge
+            <i class="sort descending icon" *ngIf="isThisColumnSort('age') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('age') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="one wide">
+          <a href="javascript:;" class="black-text"
+          [class.right]="isThisColumnSort('tag_id')" [class.labeled]="isThisColumnSort('tag_id')" [class.icon]="isThisColumnSort('tag_id')"
+          (click)="clickColumn('tag_id')">
+            Tag id
+            <i class="sort descending icon" *ngIf="isThisColumnSort('tag_id') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('tag_id') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="five wide">
+          <a href="javascript:;" class="black-text"
+          [class.right]="isThisColumnSort('team_name')" [class.labeled]="isThisColumnSort('team_name')" [class.icon]="isThisColumnSort('team_name')"
+          (click)="clickColumn('team_name')">
+            Nom de team
+            <i class="sort descending icon" *ngIf="isThisColumnSort('team_name') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('team_name') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="one wide">
+          <a href="javascript:;" class="black-text"
+          [class.right]="isThisColumnSort('type')" [class.labeled]="isThisColumnSort('type')" [class.icon]="isThisColumnSort('type')"
+          (click)="clickColumn('type')">
+            Type
+            <i class="sort descending icon" *ngIf="isThisColumnSort('type') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('type') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="one wide">
+          <a href="javascript:;" class="black-text"
+          [class.right]="isThisColumnSort('wave')" [class.labeled]="isThisColumnSort('wave')" [class.icon]="isThisColumnSort('wave')"
+          (click)="clickColumn('wave')">
+              Vague
+            <i class="sort descending icon" *ngIf="isThisColumnSort('wave') && direction=='asc'"></i>
+            <i class="sort ascending icon" *ngIf="isThisColumnSort('wave') && direction=='desc'"></i>
+          </a>
+        </th>
+        <th class="two wide">Actions</th>
+      </tr>
+    </thead>
+    <div class="ui active huge inverted text loader" *ngIf="!loaded">Chargement</div>
+    <tbody *ngIf="loaded">
+      <!-- DATA -->
+      <tr *ngFor="let runner of runners">
+        <td>{{runner.name}}</td>
+        <td class="center aligned">
+          <i class="large blue male icon" *ngIf="runner.gender=='M'"></i>
+          <i class="large pink female icon" *ngIf="runner.gender=='F'"></i>
+        </td>
+        <td class="center aligned">{{runner.age}}</td>
+        <td><span *ngIf="runner.tag && runner.tag.num!=-1">{{runner.tag.color[0]}}{{runner.tag.num}}</span></td>
+        <td>{{runner.team_name}}</td>
+        <td>{{runner.type}}</td>
+        <td>{{runner.wave_id}}</td>
+        <td class="center aligned">
+          <div class="ui buttons">
+            <button name="edit-runner" class="ui icon primary button" (click)="clickModify(runner._id)"><i class="edit icon"></i></button>
+            <button name="remove-runner" class="ui icon red button" (click)="remove(runner._id)"><i class="delete icon"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="center aligned">
+        <!-- FILTERING -->
+          <th>
+            <div class="ui fluid input" >
+              <input type="text" name="filter-name" [(ngModel)]="filters['nameFilter']" placeholder="Nom">
+            </div>
+          </th>
+          <th class=""></th>
+          <th><div class="ui fluid input" ><input type="text" name="filter-age" [(ngModel)]="filters['ageFilter']" placeholder="Âge"></div></th>
+          <th><div class="ui fluid input" ><input type="text" name="filter-tag_id" [(ngModel)]="filters['tagIdFilter']" placeholder="Tag"></div></th>
+          <th><div class="ui fluid input" ><input type="text" name="filter-team_name" [(ngModel)]="filters['teamNameFilter']" placeholder="Nom d'équipe"></div></th>
+          <th><div class="ui fluid input" ><input type="text" name="filter-type" [(ngModel)]="filters['typeFilter']" placeholder="Type"></div></th>
+          <th><div class="ui fluid input" ><input type="text" name="filter-wave" [(ngModel)]="filters['waveFilter']" placeholder="Num"></div></th>
+          <th><button class="ui primary button" type="submit" (click)="search()">Chercher</button></th>
+      </tr>
+    </tfoot>
+  </table>
+  <app-pagination [count]="count" (changePageEmitter)="changePage($event)" *ngIf="count"></app-pagination>
+
+<!-- Modal -->
+<div class="ui large modal modal-runner">
+  <div class="header">
+      <h2 class="ui centered header">Modification</h2>
+  </div>
+  <div class="content">
+    <form class="ui form" (submit)="submitForm($event)" name="formRunner">
+      <h3 class="ui brown header"><i class="user icon"></i><div class="content">Participant</div></h3>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Nom</label>
+          <input type="text" name="name" placeholder="Nom" [(ngModel)]="runnerToBeModified.name" required>
+        </div>
+        <div class="eight wide field">
+          <label>Âge</label>
+          <input type="number" name="age" placeholder="xx" [(ngModel)]="runnerToBeModified.age" required>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Sexe (H ou F)</label>
+          <input type="text" name="gender" placeholder="Sexe" [(ngModel)]="runnerToBeModified.gender" required>
+        </div>
+        <div class="four wide field" *ngIf="runnerToBeModified.tag" >
+          <label>Tag id</label>
+          <input type="text" name="tag_id" placeholder="Tag id" [(ngModel)]="runnerToBeModified.tag.num">
+        </div>
+        <div class="four wide field" *ngIf="runnerToBeModified.tag">
+          <label>Couleur</label>
+          <input type="text" name="couleur" placeholder="Couleur"  [(ngModel)]="runnerToBeModified.tag.color">
+        </div>
+        <div class="four wide field" *ngIf="!runnerToBeModified.tag">
+            <button type="button" class="ui mini button add-new-tag" (click)="addTag(runnerToBeModified)">Ajouter un tag</button>
+        </div>
+      </div>
+      <h3 class="ui brown header"><i class="users icon"></i><div class="content">Team</div></h3>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Nom de team</label>
+          <input type="text" name="team_name" placeholder="Team name" [(ngModel)]="runnerToBeModified.team_name" required>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Type</label>
+          <input type="text" name="type" placeholder="Type" [(ngModel)]="runnerToBeModified.type" required>
+        </div>
+        <div class="eight wide field">
+          <label>Vague</label>
+          <input type="text" name="wave" placeholder="Wave" [(ngModel)]="runnerToBeModified.wave_id" required>
+        </div>
+      </div>
+      <h6 class="ui header">Les modifications dans la team ne sont pas enregistrées automatiquement chez les autres membres !</h6>
+      <div class="ui basic center aligned segment">
+        <button type="button" class="ui big button cancel-modal" (click)="clickCancel()">Annuler</button>
+        <button type="submit" class="ui green big button save-modal">Modifier</button>
+      </div>
+    </form>
+  </div>
+</div>

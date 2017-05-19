@@ -1,0 +1,40 @@
+<table class="ui celled compact fixed unstackable table center aligned">
+    <thead>
+        <tr class="center aligned">
+            <th class="{{column.class}}" *ngFor="let column of columns">
+                <span *ngIf="!column.checkpoint && !column.order">{{column.title}}</span>
+                <span *ngIf="!column.checkpoint && column.order">
+                    <a id="sort-{{column.selector}}"
+                        href="javascript:;"
+                        class="black-text"
+                        class="sort-name"
+                        [class.right]="column.order"
+                        [class.labeled]="column.order"
+                        [class.icon]="column.order"
+                        (click)="clickColumn(column)">
+                            {{column.title}}
+                            <i class="sort descending icon" *ngIf="column.asc"></i>
+                            <i class="sort ascending icon" *ngIf="!column.asc"></i>
+                    </a>
+                </span>
+                <div class="ui checkbox" *ngIf="column.checkpoint">
+                    <input type="checkbox" [(ngModel)]="column.data" (change)="updateQuery()">
+                    <label>{{ column.title }}</label>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <ng-content></ng-content>
+    <tfoot>
+      <tr class="center aligned">
+        <!-- FILTERING -->
+          <th *ngFor="let column of columns">
+            <div class="ui fluid input" *ngIf="column.search">
+              <input type="text" name="filter-{{column.selector}}" [(ngModel)]="column.data" placeholder="{{column.title}}">
+            </div>
+            <button class="ui primary button" type="submit" (click)="updateQuery()" *ngIf="column.btn">Chercher</button>
+            <!-- {{ column | json }} -->
+          </th>
+      </tr>
+    </tfoot>
+</table>

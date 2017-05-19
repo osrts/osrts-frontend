@@ -1,0 +1,132 @@
+<div class="ui active huge inverted text loader" *ngIf="!loaded">Chargement</div>
+<div class="ui container" *ngIf="loaded">
+  <table class="ui unstackable compact celled table">
+    <thead>
+      <tr class="center aligned">
+        <th class="one wide">ID</th>
+        <th class="two wide">Nom du checkpoint</th>
+        <th class="two wide">Dernière connexion</th>
+        <th class="two wide">Scannés aujourd'hui</th>
+        <th class="one wide">En ligne</th>
+        <th class="one wide">Utilisé</th>
+        <th class="one wide">Distance</th>
+        <th class="four wide"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of checkpoints" class="center aligned" [class.custom-disabled]="!c.used">
+        <td>
+          <span *ngIf="c.num!=99">{{c.num}}</span>
+          <span data-tooltip="Arrivée" *ngIf="c.num==99">{{c.num}}</span>
+        </td>
+        <td>{{c.title}}</td>
+        <td>
+          <span *ngIf="c.last_connection">
+            {{c.last_connection * 1000 | date: 'HH:mm:ss - dd/MM/yy' }}
+          </span>
+        </td>
+        <td>
+            {{ c.count }}
+        </td>
+        <td>
+          <i *ngIf="!c.online" class="big red wifi icon"></i>
+          <i *ngIf="c.online" class="big green wifi icon"></i>
+        </td>
+        <!-- <td>
+          <span [ngSwitch]="c.uploaded" *ngIf="c.used">{{c.uploaded}}
+            <i *ngSwitchCase="'false'" class="big grey ban icon"></i>
+            <i *ngSwitchCase="'doing'" class="big blue notched circle loading icon"></i>
+            <i *ngSwitchCase="'true'" class="big green checkmark icon"></i>
+          </span>
+        </td> -->
+        <td>
+          <div class="ui disabled checkbox" [class.disabled]="c.num==99">
+            <input type="checkbox" [checked]="c.used" [disabled]="c.num==99" (change)="changeCheckbox(c)">
+            <label></label>
+          </div>
+        </td>
+        <td>
+          {{c.distance}}m
+        </td>
+        <td>
+          <div class="ui buttons">
+            <button class="ui icon green button" (click)="openModalTimes(c)"><i class="plus icon"></i><i class="hourglass full icon"></i></button>
+            <button class="ui icon button" (click)="displayConfiguration(c)"><i class="configure icon"></i></button>
+            <button class="ui icon primary button" (click)="openModal(c)"><i class="edit icon"></i></button>
+            <button class="ui icon red button" (click)="remove(c._id)"><i class="delete icon"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="6">
+        <div class="ui right floated small primary icon button" (click)="addCheckpoint()">
+          Add Checkpoint
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="ui modal modal-checkpoint">
+  <div class="header">
+      <h2 class="ui centered header">Modification</h2>
+  </div>
+  <div class="content">
+    <form class="ui form" name="formCheckpoint" (submit)="submitForm()">
+      <div class="inline fields">
+            <div class="sixteen wide field">
+          <label>Nom du checkpoint</label>
+          <input type="text" name="from" placeholder="Nom" [(ngModel)]="checkpointToBeModified.title" required>
+        </div>
+            <div class="sixteen wide field">
+          <label>La distance</label>
+          <input type="number" name="from" placeholder="Distance" [(ngModel)]="checkpointToBeModified.distance" required>
+        </div>
+      </div>
+      <div class="ui basic center aligned segment">
+        <button type="button" class="ui big button" (click)="closeModal()">Annuler</button>
+        <button type="submit" class="ui primary big button">Modifier</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="ui modal modal-times">
+  <div class="header">
+      <h2 class="ui centered header">Ajouter un temps</h2>
+  </div>
+  <div class="content">
+    <form class="ui form" name="formCheckpoint" (submit)="submitForm()">
+      <div class="three fields">
+        <div class="inline field">
+          <label>Checkppoint</label>
+          <input type="number" placeholder="Checkpoint" *ngIf="modalTimes.checkpoint" [(ngModel)]="modalTimes?.checkpoint.num" name="modal-times-num" required disabled>
+        </div>
+        <div class="inline field">
+          <label>Runner N°</label>
+          <input type="number" placeholder="Runner" [(ngModel)]="modalTimes.runner" name="modal-times-runner" required>
+        </div>
+        <div class="inline field">
+            <label>Color</label>
+            <select class="ui selection dropdown" [(ngModel)]="modalTimes.color" name="tet" name="modal-times-color">
+                <option *ngFor="let color of colors" [value]="color">{{color}}</option>
+            </select>
+        </div>
+        <div class="inline field">
+          <label>Time</label>
+          <input id="date-picker" type="text" step="1" [(ngModel)]="modalTimes.time" name="modal-times-time" required>
+        </div>
+      </div>
+      <div class="ui basic center aligned segment">
+        <button type="button" class="ui big button" (click)="closeModal()">Annuler</button>
+        <button type="submit" class="ui primary big button" (click)="insertTime()">Ajouter</button>
+      </div>
+    </form>
+  </div>
+</div>

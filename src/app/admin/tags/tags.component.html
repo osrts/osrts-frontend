@@ -1,0 +1,104 @@
+<div class="ui container">
+  <!--<h1 class="ui white-text centered header">Gestion des tags</h1>-->
+  <div class="ui two column stackable grid">
+    <div class="column">
+      <div class="ui segment">
+        <h2 class="ui centered header page-title">Liste des tags</h2>
+        <table class="ui celled compact fixed unstackable table" >
+          <thead>
+            <tr>
+              <th>Couleur</th>
+              <th>Numéro</th>
+              <th>Assigné</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of tags">
+              <td>{{tag.color}}</td>
+              <td>{{tag.num}}</td>
+              <td>
+                <i class="green checkmark big icon" *ngIf="tag.assigned==true"></i>
+                <i class="red remove big icon" *ngIf="!tag.assigned"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ui two column grid">
+          <div class="column">
+            <div class="ui segments" >
+              <div class="ui segment">
+                Total: <strong><span class="total-tags">{{totalTags}}</span></strong> tags
+              </div>
+              <div class="ui form segment">
+                <div class="ui checkbox">
+                  <input type="checkbox" name="onlyAssigned" (change)="toggleShowOnlyAssigned()">
+                  <label>Non-assignés uniquement</label>
+                </div>
+                <div class="field">
+                  <label>Couleur</label>
+                  <select class="ui search dropdown" [(ngModel)]="showOnlyColor" (ngModelChange)="find()">
+                    <option value="">Toutes</option>
+                    <option *ngFor="let color of colors" [value]="color">{{color}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="ui basic segment">
+              <div class="ui pagination menu" *ngIf="nbPages>1">
+                <a class="icon item" (click)="changePage(currentPage-1)">
+                  <i class="left chevron icon"></i>
+                </a>
+                <a class="item" href="javascript:;" (click)="changePage(1)" [class.grey-text]="currentPage==1">
+                  1
+                </a>
+                <a class="item grey-text" href="javascript:;" *ngIf="currentPage>1 && currentPage < nbPages">
+                  {{currentPage}}
+                </a>
+                <a class="item" href="javascript:;" *ngIf="nbPages>1" (click)="changePage(nbPages)" [class.grey-text]="currentPage==nbPages">
+                  {{ nbPages }}
+                </a>
+                <a class="icon item" (click)="changePage(currentPage+1)">
+                  <i class="right chevron icon"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui stacked segment">
+        <h2 class="ui centered header">Actions</h2>
+        <form #form="ngForm" class="ui form segment">
+          <div class="two fields">
+            <div class="field">
+              <label for="tag-from">De </label>
+              <input type="number" name="tag-from" [(ngModel)]="range.from"
+                    min="1" value="1" required>
+            </div>
+            <div class="field">
+              <label for="tag-to">À </label>
+              <input type="number" name="tag-to" [(ngModel)]="range.to"
+                    min="1" value="1" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="tag-color">Couleur </label>
+            <input type="text" name="tag-color" placeholder="Couleur" [(ngModel)]="range.color" required>
+          </div>
+          <div class="ui basic center aligned segment">
+            <div class="ui center aligned buttons">
+              <button name="add-tags" class="ui primary button" (click)="createTags()">Ajouter</button>
+              <button type="button" name="remove-tags" class="ui button" (click)="deleteTags()">Supprimer</button>
+            </div>
+          </div>
+        </form>
+        <div class="ui horizontal divider"></div>
+        <div class="ui basic center aligned segment">
+          <button name="assign-tags" class="ui red button" (click)="assignTags()">Assigner les tags automatiquement</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

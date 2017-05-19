@@ -1,0 +1,19 @@
+<div class="ui full-height container">
+  <div class="ui middle aligned center aligned grid full-height">
+    <div class="column">
+      <div class="ui segment">
+        <h1 class="ui centered header page-title">
+          Bienvenue sur la page des résultats de Game of Trails
+        </h1>
+        <div class="ui center aligned segment" *ngIf="days.length==0">
+          <h3 class="ui header">Il semble qu'il n'y a pas de course prévue pour le moment.</h3>
+        </div>
+        <div class="ui equal width center aligned grid">
+          <div class="column" *ngFor="let day of days">
+            <a class="ui primary button" [routerLink]="day.link">Voir résultats du {{day.dayOfWeek}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

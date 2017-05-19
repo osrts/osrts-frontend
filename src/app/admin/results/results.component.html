@@ -1,0 +1,53 @@
+<div class="ui active huge inverted text loader" *ngIf="!loaded">Chargement</div>
+<div class="ui container" *ngIf="loaded">
+    <app-day-chooser (changeDateEmitter)="changeDate($event)"></app-day-chooser>
+    <app-table [nbPages]="data.count" [columns]="columns" [checkpoints]="checkpoints" (queryUpdated)="handleQueryUpdated($event)">
+        <tr *ngFor="let result of data.results">
+            <td>{{result.number}}</td>
+            <td>{{result.name}}</td>
+            <td>
+                <span class="ui image label" [ngClass]="{'yellow': result.tag.color == 'Orange', 'blue': result.tag.color == 'Bleu'}" style="width: 100px !important">
+                        {{result.tag.num}} - {{result.tag.color}}
+                    </span>
+            </td>
+            <td>{{result.team_name}}</td>
+            <td>{{result.date}}</td>
+            <td>{{result.start_time}}</td>
+            <td *ngFor="let checkpoint of checkpoints">
+                <span *ngIf="result.times[checkpoint.num]">
+                      {{result.times[checkpoint.num]?.time | amUtc | amDateFormat: 'H:mm:ss'}}
+                </span>
+            </td>
+            <td>
+                <div class="ui buttons">
+                  <!-- <button class="ui button" (click)="edit(result)"><i class="edit icon"></i></button> -->
+                  <button class="ui button red" (click)="remove(result._id)"><i class="remove icon"></i></button>
+                </div>
+            </td>
+        </tr>
+    </app-table>
+    <app-pagination [count]="data.count" (changePageEmitter)="changePage($event)"></app-pagination>
+</div>
+
+
+<!-- MODAL -->
+<!-- <div class="ui modal modal-result" >
+  <div class="header">
+      <h2 class="ui centered header">Ajouter un temps</h2>
+  </div>
+  <div class="content">
+    <form class="ui form" name="formCheckpoint" *ngIf="resultToBeModified.times">
+
+        <div class="inline field" *ngFor="let checkpoint of checkpoints">
+          <label>Checkppoint {{ checkpoint.num }}</label>
+          {{ resultToBeModified.times[checkpoint.num].time4 }}
+          <input type="time" placeholder="Checkpoint" step="1" name="modal-times-{{checkpoint.num}}" [(ngModel)]="resultToBeModified.times[checkpoint.num].input">
+        </div>
+
+      <div class="ui basic center aligned segment">
+        <button type="button" class="ui big button" (click)="closeModal()">Annuler</button>
+        <button type="submit" class="ui primary big button" (click)="updateResult()">Ajouter</button>
+      </div>
+    </form>
+  </div>
+</div> -->

@@ -1,0 +1,10 @@
+<button class="ui button first-letter-capitalized" *ngFor="let day of days" (click)="changeDate(day.date)"
+[class.primary]="dateChosen==day.date">
+  {{day.dayOfWeek}}
+</button>
+
+<div class="ui basic fluid center aligned segment"  *ngIf="days.length==0">
+  <div class="ui segment">
+    <h1 class="ui header">Pas de course prévue.</h1>
+  </div>
+</div>

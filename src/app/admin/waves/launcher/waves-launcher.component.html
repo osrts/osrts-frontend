@@ -1,0 +1,41 @@
+<div class="ui container nearly-full-height">
+  <!--<h1 class="ui white-text center aligned header" *ngIf="waves && waves.length>0">Lancement des vagues</h1>-->
+  <!-- <div *ngIf="waves && waves.length>0"> -->
+      <app-day-chooser (changeDateEmitter)="changeDate($event)"></app-day-chooser>
+  <!-- </div> -->
+  <div class="ui basic fluid center aligned segment" *ngIf="!waves || waves.length==0">
+    <div class="ui segment" *ngIf="waves.length==0">
+      <h1 class="ui header">Pas de vagues</h1>
+      <button class="ui primary button" [routerLink]=" ['../dashboard'] ">Importer les coureurs sur la page d'accueil</button>
+    </div>
+  </div>
+  <div class="ui segment" *ngIf="waves && waves.length>0">
+    <h1 class="ui center aligned header">Lancement des vagues</h1>
+    <div class="ui divided items">
+      <div class="item" *ngFor="let wave of waves">
+        <div class="image">
+          <img src="assets/logo_big_black.png">
+        </div>
+        <div class="middle aligned content">
+          <div class="header first-letter-capitalized">
+            {{wave.type}} ({{wave.num}})
+          </div>
+          <div class="meta first-letter-capitalized">
+            {{moment(wave.date, "DD-MM-YYYY").format("dddd, DD-MM-YY")}}
+          </div>
+          <div class="extra">
+            <div class="ui big right floated primary button" *ngIf="!wave['start_time']" (click)="launchWave(wave)">
+              Lancer la vague !
+            </div>
+            <div class="ui right floated red button" *ngIf="wave['start_time']" (click)="resetWave(wave)">
+              Réinitialiser
+            </div>
+            <div class="ui large basic brown label">
+              <i class="users icon"></i>{{wave.count}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

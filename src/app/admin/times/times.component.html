@@ -1,0 +1,21 @@
+<div class="ui active huge inverted text loader" *ngIf="!loaded">Chargement</div>
+<div class="ui container" *ngIf="loaded">
+
+    <button class="ui button red right floated" (click)="removeAll()">(Supprimer tout)</button>
+    <app-table [nbPages]="data.count" [columns]="columns" (queryUpdated)="handleQueryUpdated($event)">
+        <tr *ngFor="let time of data.times">
+            <td>{{time.checkpoint_id}}</td>
+            <td>
+                <span class="ui image label" [ngClass]="{'yellow': time.tag.color == 'Orange', 'blue': time.tag.color == 'Bleu'}" style="width: 100px !important">
+                        {{time.tag.num}} - {{time.tag.color}}
+                    </span>
+            </td>
+            <td><span>{{ time.timestamp | amDateFormat: 'H:mm:ss' }}</span></td>
+            <td><span>{{ (time.timestamp) | amDateFormat: 'DD-MM-YYYY' }}</span></td>
+            <td>
+                <button class="tiny ui button red" (click)="remove(time._id)"><i class="remove icon"></i> Supprimer</button>
+            </td>
+        </tr>
+    </app-table>
+  <app-pagination [count]="data.count" (changePageEmitter)="changePage($event)"></app-pagination>
+</div>

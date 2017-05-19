@@ -1,0 +1,50 @@
+<div class="ui small modal wave-modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Modification d'une vague
+    </div>
+    <div class="content">
+        <div class="description">
+            <form #form="ngForm" class="ui form">
+                <div class="two fields">
+                  <div class="inline field">
+                    <label>Type</label>
+                    <select id="wave-type" class="ui dropdown" [(ngModel)]="wave.type" name="wave-type" required>
+                      <option value="">Type</option>
+                      <option value="kid">Kid</option>
+                      <option value="fun">Fun</option>
+                      <option value="compet">Compet</option>
+                    </select>
+                  </div>
+                  <div class="inline field">
+                    <label>Numéro de vague</label>
+                    <input type="number" [(ngModel)]="wave.num" name="wave-num" placeholder="Vague n°" required>
+                  </div>
+                </div>
+                <div class="two fields">
+                  <div class="inline field">
+                    <label>Date</label>
+                    <select id="wave-date" class="ui dropdown" [(ngModel)]="wave.date" name="wave-date" required>
+                      <option value="">Jour</option>
+                      <option *ngFor="let day of days" [attr.value]="day.date">{{day.dayOfWeek}}, {{day.date}}</option>
+                    </select>
+                  </div>
+                  <div class="inline field">
+                    <label>Chronométrage</label>
+                    <div class="ui checkbox">
+                      <input type="checkbox" [(ngModel)]="wave.chrono" name="wave-chrono">
+                      <div class="box"></div>
+                    </div>
+                  </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Cancel
+        </div>
+        <button type="submit" class="ui positive right labeled icon button" [disabled]="!form.valid" (click)="save()" >Save <i class="checkmark icon"></i></button>
+    </div>
+</div>
