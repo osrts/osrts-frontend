@@ -15,58 +15,58 @@ describe('Runners Page', function() {
 
     it('should display message saying app works', () => {
         page.navigateTo();
-        expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/#/admin/runners');
+        expect(browser.getCurrentUrl()).toContain('/#/admin/runners');
     });
 
     it('should sort runners by name (asc, desc)', () => {
-        expect(page.getTab(0, 0).getText()).toEqual('Alan Dillmann');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
         page.sortBy('name');
-        expect(page.getTab(0, 0).getText()).toEqual('Zyed Hamdi');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday9');
         page.sortBy('name');
-        expect(page.getTab(0, 0).getText()).toEqual('Alan Dillmann');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
     });
 
-    it('should filter runners by name (Charlotte)', () => {
-        page.filterBy('name', 'anne')
-        expect(page.countTable()).toEqual(2);
+    it('should filter runners by name (4)', () => {
+        page.filterBy('name', '1')
+        expect(page.countTable()).toEqual(4);
     });
 
-    it('should sort filtered runners by name (Anne)', () => {
-        expect(page.getTab(0, 0).getText()).toEqual('Anne Ciamarra');
+    it('should sort filtered runners by name (4)', () => {
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
         page.sortBy('name');
-        expect(page.getTab(0, 0).getText()).toEqual('Anne-sophie Delacroix');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday12');
         page.sortBy('name');
-        expect(page.getTab(0, 0).getText()).toEqual('Anne Ciamarra');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
     });
 
     it('should reset filter (name)', () => {
         page.resetFilter('name');
         expect(page.countTable()).toEqual(10);
         expect(element.all(by.css('tbody > tr')).count()).toEqual(10);
-        expect(page.getTab(0, 0).getText()).toEqual('Alan Dillmann');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
     });
 
-    it('should filter runners by age (age 30)', () => {
-        page.filterBy('age', '30')
-        expect(page.countTable()).toEqual(5);
+    it('should filter runners by age (age 31)', () => {
+        page.filterBy('age', '31');
+        browser.sleep(3000);
+        expect(page.countTable()).toEqual(2);
     });
 
 
-    it('should sort filtered runners by age (age 30)', () => {
-
-        expect(page.getTab(0, 0).getText()).toEqual('Dounet Villers');
-        page.sortBy('age');
-        expect(page.getTab(0, 0).getText()).toEqual('Mathieu Hardy');
-        page.sortBy('age');
-        expect(page.getTab(0, 0).getText()).toEqual('Mathieu Hardy');
+    it('should sort filtered runners by age (age 31)', () => {
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
+        page.sortBy('name');
+        browser.sleep(3000);
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday10');
+        browser.sleep(3000);
+        page.sortBy('name');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
     });
 
     it('should reset filter (age)', () => {
         page.resetFilter('age')
         expect(page.countTable()).toEqual(10);
-        // Reset the default order
-        page.sortBy('name');
-        expect(page.getTab(0, 0).getText()).toEqual('Alan Dillmann');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_saturday1');
     });
 
     it('should filter runners by tag id (1)', () => {
@@ -78,9 +78,9 @@ describe('Runners Page', function() {
         page.resetFilter('tag_id')
         expect(page.countTable()).toEqual(10);
     });
-    it('should filter runners by team_name (les neuneux)', () => {
-        page.filterBy('team_name', 'les neuneux')
-        expect(page.countTable()).toEqual(5);
+    it('should filter runners by team_name (Team A)', () => {
+        page.filterBy('team_name', 'Team A')
+        expect(page.countTable()).toEqual(4);
     });
     it('should reset filter (team_name)', () => {
         page.resetFilter('team_name')
@@ -90,12 +90,12 @@ describe('Runners Page', function() {
     it('should change to the sunday page', () => {
         element.all(by.css('button')).get(2).click();
         browser.sleep(500);
-        expect(page.getTab(0, 0).getText()).toEqual('Adrien Berti');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_sunday1');
     });
 
     it('should edit the first runner (name = AA_Testing Name)', () => {
         page.edit(0);
-        expect(page.getValue('name')).toEqual('Adrien Berti');
+        expect(page.getValue('name')).toEqual('Runner_sunday1');
         page.setValue('name', 'AA_Testing Name')
         browser.sleep(1000);
         page.save();
@@ -104,17 +104,17 @@ describe('Runners Page', function() {
         browser.sleep(1000);
     });
 
-    it('should restore the first runner (name = Adeline Stals)', () => {
+    it('should restore the first runner (name = Runner_sunday1)', () => {
         page.edit(0);
         expect(page.getValue('name')).toEqual('AA_Testing Name');
-        page.setValue('name', 'Adrien Berti')
+        page.setValue('name', 'Runner_sunday1')
         page.save();
-        expect(page.getTab(0, 0).getText()).toEqual('Adrien Berti');
+        expect(page.getTab(0, 0).getText()).toEqual('Runner_sunday1');
     });
 
     it('should edit the first runner (Use used tag)', () => {
         page.edit(0);
-        page.setValue('tag_id', '1')
+        page.setValue('tag_id', '5')
         page.setValue('couleur', 'Orange')
         element(by.css('.save-modal')).click();
         browser.sleep(1000);
@@ -141,7 +141,7 @@ describe('Runners Page', function() {
         expect(page.getTab(0, 3).getText()).toEqual('');
     });
 
-    it('should edit the first runner (Team name)', () => {
+    it('should edit the second runner (Team name)', () => {
         page.edit(0);
         page.setValue('team_name', 'Super Ultra Team')
         page.save();
@@ -155,7 +155,7 @@ describe('Runners Page', function() {
     });
 
     it('should edit the second runner (Team name)', () => {
-        page.edit(2);
+        page.edit(1);
         page.setValue('team_name', 'Les all starks')
         page.save()
         expect(page.getTab(0, 4).getText()).toEqual('Les all starks');

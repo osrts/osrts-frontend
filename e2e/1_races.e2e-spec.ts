@@ -14,13 +14,13 @@ describe('Races Page', function() {
 
     it('should display message saying app works', () => {
         page.navigateTo();
-        expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/#/admin/races');
+        expect(browser.getCurrentUrl()).toContain('/#/admin/races');
     });
 
     it('should open races page', () => {
         browser.get('/#/admin/races');
         browser.sleep(500)
-        expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/#/admin/races');
+        expect(browser.getCurrentUrl()).toContain('/#/admin/races');
     });
 
     it('should open modal - new race', () => {

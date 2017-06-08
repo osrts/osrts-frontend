@@ -10,7 +10,7 @@ var path = require('path');
 describe('Waves Page', function() {
     it('should open runners page', () => {
         browser.get('/#/admin/waves-management');
-        expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/#/admin/waves-management');
+        expect(browser.getCurrentUrl()).toContain('/#/admin/waves-management');
     });
 
     it('should see 1 waves by default (saturday)', () => {
@@ -52,6 +52,7 @@ describe('Waves Page', function() {
     it('should remove the second wave', () => {
         element.all(by.css('tbody button')).get(3).click();
         element.all(by.css('.swal2-confirm')).first().click();
+        browser.sleep(500);
         expect(element.all(by.css('tbody > tr')).count()).toEqual(1);
         expect(element.all(by.css('tbody tr td div')).first().getText()).toEqual("compet");
     });

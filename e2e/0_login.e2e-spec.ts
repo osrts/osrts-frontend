@@ -17,8 +17,8 @@ describe('Login Page', function() {
   it('should login successfully', () => {
     element(by.css('.email')).clear();
     element(by.css('.password')).clear();
-    element(by.css('.email')).sendKeys('gui.deconinck@gmail.com');
-    element(by.css('.password')).sendKeys('azerty9');
+    element(by.css('.email')).sendKeys('test@test.test');
+    element(by.css('.password')).sendKeys('test');
     expect(element(by.css('form')).getAttribute('class')).toMatch('ng-valid');
     element(by.css('form button')).click();
     return browser.driver.wait(function() {

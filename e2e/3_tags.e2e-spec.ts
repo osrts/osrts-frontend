@@ -9,7 +9,7 @@ describe('Tags Page', function() {
 
   it('should open dashboard page', () => {
     browser.get('/#/admin/tags');
-    expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/#/admin/tags');
+    expect(browser.getCurrentUrl()).toContain('/#/admin/tags');
   });
 
   it('should remove all tags', () => {
@@ -19,7 +19,7 @@ describe('Tags Page', function() {
     element(by.name('tag-from')).sendKeys("1");
     element(by.name('tag-to')).sendKeys("1000");
     element(by.name('remove-tags')).click();
-    browser.sleep(500);
+    browser.sleep(1000);
     expect(element(by.css('.total-tags')).getText()).toEqual('0');
   });
 
@@ -30,7 +30,7 @@ describe('Tags Page', function() {
     element(by.name('tag-to')).sendKeys("250");
     element(by.name('tag-color')).sendKeys("Bleu");
     element(by.name('add-tags')).click();
-    browser.sleep(500);
+    browser.sleep(1000);
     expect(element(by.css('.total-tags')).getText()).toEqual('250');
   });
 
@@ -41,13 +41,13 @@ describe('Tags Page', function() {
     element(by.name('tag-to')).sendKeys("250");
     element(by.name('tag-color')).sendKeys("Orange");
     element(by.name('add-tags')).click();
-    browser.sleep(500);
+    browser.sleep(1000);
     expect(element(by.css('.total-tags')).getText()).toEqual('500');
   });
 
   it('should show only assigned tags (before assign)', () => {
     element(by.name('onlyAssigned')).click();
-    browser.sleep(500);
+    browser.sleep(1000);
     expect(element(by.css('.total-tags')).getText()).toEqual('500');
     element(by.name('onlyAssigned')).click();
   });
@@ -63,7 +63,7 @@ describe('Tags Page', function() {
 
    it('should show only assigned tags (after assign)', () => {
     element(by.name('onlyAssigned')).click();
-    browser.sleep(500);
-    expect(element(by.css('.total-tags')).getText()).toEqual('219');
+    browser.sleep(1000);
+    expect(element(by.css('.total-tags')).getText()).toEqual('476');
   });
 });

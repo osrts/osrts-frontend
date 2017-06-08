@@ -9,7 +9,7 @@ describe('Dashboard Page', function() {
 
   it('should open dashboard page', () => {
     browser.get('/#/admin/dashboard');
-    expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/#/admin/dashboard');
+    expect(browser.getCurrentUrl()).toContain('/#/admin/dashboard');
   });
 
   it('should be step "Import runners"', () => {

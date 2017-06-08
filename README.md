@@ -32,7 +32,7 @@ If the installer of Semantic-UI shows up, skip the installation and let it use t
 
 # Development server
 
-For running the server in a development environment, use the `ng serve` command. 
+For running the server in a development environment, use the `ng serve` command.
 
 ```
 $ ng serve
@@ -58,6 +58,8 @@ The build artifacts will be stored in the `dist/` directory. Use the `-prod` fla
 
 # Structure
 
+This list is not exhaustive. It only shows the main files that can be modified.
+
 - **e2e/** : contains all the end-to-end tests.
 - **src/**
     - **app/** : contains the source code of the front-end
@@ -73,7 +75,7 @@ The build artifacts will be stored in the `dist/` directory. Use the `-prod` fla
 # Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve` and that the back-end is running.
+It will automatically serve the app for you. However, the back-end has to be running.
 
 # License
 [MIT](https://github.com/osrts/osrts-backend/blob/master/LICENSE)
