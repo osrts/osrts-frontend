@@ -12,8 +12,8 @@ import { SocketService } from '../services/feathers.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  public user = {};
-  public error= {};
+  public user:any = {};
+  public error:any= {};
   constructor(private router: Router, private socketService: SocketService) { }
 
   signIn() {

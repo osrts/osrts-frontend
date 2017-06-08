@@ -26,7 +26,7 @@ export class RunnersComponent implements OnInit, AfterViewInit, OnDestroy  {
   private subscription: Subscription;
   runners=null;
   count:number;
-  runnerToBeModified={};
+  runnerToBeModified:any={};
 
   // Sorting
   columnSort="name";
