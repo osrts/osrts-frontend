@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/feathers.service';

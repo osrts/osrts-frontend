@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ResultsService } from '../../services/results/results.service';
 import { CheckpointsService } from '../../services/checkpoints/checkpoints.service';

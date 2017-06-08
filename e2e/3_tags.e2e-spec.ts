@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { RealTimeRacingSystemPage } from './app.po';
 import { browser, element, by,  } from 'protractor';
 var path = require('path');

@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
 import { SocketService } from '../feathers.service';

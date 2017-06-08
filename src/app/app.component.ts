@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Title }  from '@angular/platform-browser';
 
@@ -14,9 +17,3 @@ export class AppComponent {
     this.titleService.setTitle("Game of Trails - résultats");
   }
 }
-
-  // <div class="page-wrapper">
-  //   <div class="dimmed-background">
-  //     <router-outlet></router-outlet>
-  //   </div>
-  // </div>

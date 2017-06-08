@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { browser, element, by, Key} from 'protractor';
 
 export class RacesPage {

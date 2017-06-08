@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { RealTimeRacingSystemPage } from './app.po';
 import { browser, element, by,  } from 'protractor';
 
@@ -11,29 +14,6 @@ describe('Login Page', function() {
     expect(element(by.css('.page-title')).getText()).toEqual("Connexion à l'espace admin");
   });
 
-  // it('should stay on login page - empty form', () => {
-  //   element(by.css('form button')).click();
-  //   expect(element(by.css('form')).getAttribute('class')).toMatch('ng-invalid');
-  // });
-  //
-  // it('should stay on login page - wrong email ', () => {
-  //   element(by.css('.email')).sendKeys('email.com');
-  //   element(by.css('form button')).click();
-  //   expect(element(by.css('form')).getAttribute('class')).toMatch('ng-invalid');
-  //   expect(element(by.css('form')).getAttribute('class')).toMatch('ng-dirty');
-  // });
-  //
-  // it('should stay on login page - wrong password ', () => {
-  //   element(by.css('.email')).clear();
-  //   element(by.css('.password')).clear();
-  //
-  //   element(by.css('.email')).sendKeys('email@net.com');
-  //   element(by.css('.password')).sendKeys('blabla');
-  //   element(by.css('form button')).click();
-  //   expect(element(by.css('form')).getAttribute('class')).toMatch('ng-valid');
-  //   expect(element(by.css('.negative > h3')).getText()).toEqual("Connexion refusée");
-  // });
-
   it('should login successfully', () => {
     element(by.css('.email')).clear();
     element(by.css('.password')).clear();
@@ -41,7 +21,6 @@ describe('Login Page', function() {
     element(by.css('.password')).sendKeys('azerty9');
     expect(element(by.css('form')).getAttribute('class')).toMatch('ng-valid');
     element(by.css('form button')).click();
-    // browser.sleep(30000);
     return browser.driver.wait(function() {
           return browser.driver.getCurrentUrl().then(function(url) {
               return /admin/.test(url);

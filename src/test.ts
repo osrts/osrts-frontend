@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import './polyfills.ts';
 
 import 'zone.js/dist/long-stack-trace-zone';

@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { browser, element, by, Key} from 'protractor';
 
 export class Utils {
@@ -17,7 +20,7 @@ export class Utils {
         element.all(by.css('.edit')).get(row).click();
         browser.sleep(500)
     }
-    
+
     remove(row) {
         element.all(by.name('.remove')).get(row).click();
         browser.sleep(500)

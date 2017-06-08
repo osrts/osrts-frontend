@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import {NgModule}      from '@angular/core';
 import {CommonModule}  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';

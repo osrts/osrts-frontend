@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 const TIMES_PER_PAGE = 10;
 

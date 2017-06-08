@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +23,6 @@ import { UnauthGuard } from './services/auth/unauth-guard';
 import { TableComponent } from './components/table/table.component';
 import { DayChooserComponent } from './components/day-chooser/day-chooser.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-// import { TimeInputComponent } from './components/time-input/time-input.component';
 
 @NgModule({
     declarations: [
@@ -28,11 +30,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
         LoginComponent,
         ResultsComponent,
         PageNotFoundComponent,
-        HomeComponent,
-        // TimeInputComponent,
-        // PaginationComponent,
-        // DayChooserComponent,
-        // TableComponent
+        HomeComponent
     ],
     imports: [
         BrowserModule,
@@ -47,7 +45,6 @@ import { PaginationComponent } from './components/pagination/pagination.componen
         ], { useHash: true })
     ],
     providers: [SocketService, AuthGuard, UnauthGuard],
-    bootstrap: [AppComponent],
-    // exports: [PaginationComponent]
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

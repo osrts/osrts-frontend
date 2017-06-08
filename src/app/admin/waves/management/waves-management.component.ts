@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { WavesService } from '../../../services/waves/waves.service';
 declare var jQuery:any;

@@ -1,3 +1,6 @@
+// Open Source Race Timing System - Front-end
+// Wojciech Grynczel & Guillaume Deconinck
+
 import { Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { BrowserXhr, Http} from '@angular/http';
 import { RaceService } from '../../services/race/race.service';
