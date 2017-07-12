@@ -9,6 +9,7 @@
             <th class="one wide"><strong>#</strong></th>
             <th class="one wide" *ngIf="isConnected">Tag</th>
             <th>Nom</th>
+            <th>Sexe</th>
             <th>Equipe</th>
             <th class="two wide hidden-desktop">Temps</th>
             <th class="three wide hidden-mobile" *ngFor="let checkpoint of checkpoints">
@@ -37,6 +38,10 @@
             <td>
               {{result.name}}
             </td>
+            <td class="center aligned">
+              <i class="large blue male icon" *ngIf="result.gender=='M'"></i>
+              <i class="large pink female icon" *ngIf="result.gender=='F'"></i>
+            </td>
             <td>
               {{result.team_name}}
             </td>
@@ -63,6 +68,7 @@
             <th></th>
             <th *ngIf="isConnected"></th>
             <th><div class="ui fluid input"><input type="text" name="name" [(ngModel)]="filters['nameFilter']"></div></th>
+            <th><div class="ui fluid input"><input type="text" name="gender" placeholder="M ou F" [(ngModel)]="filters['genderFilter']"></div></th>
             <th><div class="ui fluid input"><input type="text" name="team_name" [(ngModel)]="filters['teamNameFilter']"></div></th>
             <!-- <th></th> -->
             <th class="hidden-mobile" *ngFor="let checkpoint of checkpoints | slice:0:checkpoints.length-1"></th>

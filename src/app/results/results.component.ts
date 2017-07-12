@@ -35,7 +35,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   date:String;
   momentDate:any;
   // Filtering
-  filters={nameFilter:"", teamNameFilter: "", checkpointsFilter: []};
+  filters={nameFilter:"", genderFilter: "", teamNameFilter: "", checkpointsFilter: []};
   // Paging
   nbPages=1;
   currentPage=1;
@@ -95,6 +95,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   find(){
     let query = {date: this.date, $sort: { 'number': 1}};
     this.checkAndAddFilter(query, 'name', this.filters['nameFilter'], false);
+    this.checkAndAddGenderFilter(query, this.filters['genderFilter']);
     this.checkAndAddFilter(query, 'team_name', this.filters['teamNameFilter'], false);
     if(this.filters.checkpointsFilter.length>0){
       query['checkpoints_ids'] = {$all: this.filters.checkpointsFilter};
@@ -114,6 +115,12 @@ export class ResultsComponent implements OnInit, OnDestroy {
         if(!isNaN(num))
           query[field] = num;
       }
+    }
+  }
+
+  checkAndAddGenderFilter(query, gender){
+    if(gender!=""){
+      query["gender"] = gender;
     }
   }
 
