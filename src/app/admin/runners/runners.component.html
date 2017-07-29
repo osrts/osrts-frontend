@@ -1,9 +1,4 @@
 <div class="ui container">
-  <!-- <div *ngIf="runners">
-    <button class="ui button first-letter-capitalized" *ngFor="let day of days" (click)="changeDay(day.index)" [class.primary]="day.index==dateIndex">
-      {{day.dayOfWeek}}
-    </button>
-  </div> -->
   <app-day-chooser (changeDateEmitter)="changeDate($event)"></app-day-chooser>
 
   <div class="ui basic fluid center aligned segment" *ngIf="!runners">

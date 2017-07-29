@@ -18,10 +18,7 @@ export class RunnersService {
     count: Number
   };
 
-  constructor(
-    private _socketService: SocketService
-  ) {
-    // Let's get both the socket.io and REST feathers services for runners!
+  constructor(private _socketService: SocketService){
 
     this._socket = _socketService.getService('runners');
 

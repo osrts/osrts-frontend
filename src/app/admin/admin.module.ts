@@ -19,9 +19,13 @@ import { RunnersComponent } from './runners/runners.component';
 import { TagsComponent } from './tags/tags.component';
 import { TimesComponent } from './times/times.component';
 import { ResultsComponent } from './results/results.component';
+import { UsersComponent } from './users/users.component';
+
+// Reusable components
 import { TableComponent } from '../components/table/table.component'
 import { DayChooserComponent } from '../components/day-chooser/day-chooser.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';
+
 
 const routes: Routes = [
     { path: '', component: AdminComponent, children: [
@@ -34,7 +38,8 @@ const routes: Routes = [
             {path: 'runners', component: RunnersComponent},
             {path: 'tags', component: TagsComponent},
             {path: 'times', component: TimesComponent},
-            {path: 'results', component: ResultsComponent}
+            {path: 'results', component: ResultsComponent},
+            {path: 'users', component: UsersComponent}
         ]
     }
 ];
@@ -53,6 +58,7 @@ const routes: Routes = [
       TagsComponent,
       TimesComponent,
       ResultsComponent,
+      UsersComponent,
       TableComponent,
       DayChooserComponent,
       PaginationComponent,

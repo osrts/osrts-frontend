@@ -19,10 +19,7 @@ export class TagsService {
     count: Number
   };
 
-  constructor(
-    private _socketService: SocketService
-  ) {
-    // Let's get both the socket.io and REST feathers services for tags!
+  constructor(private _socketService: SocketService) {
 
     this._socket = _socketService.getService('tags');
 

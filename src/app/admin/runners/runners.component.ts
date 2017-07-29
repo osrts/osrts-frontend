@@ -138,8 +138,8 @@ export class RunnersComponent implements OnInit, AfterViewInit, OnDestroy  {
   // #######################
 
   // Open modal
-  clickModify($key){
-    this._runnersService.findOne($key).then((data)=>{
+  clickModify(runnerId){
+    this._runnersService.findOne(runnerId).then((data)=>{
       this.runnerToBeModified = data;
     });
     jQuery('.ui.modal-runner').modal('show');
@@ -147,14 +147,6 @@ export class RunnersComponent implements OnInit, AfterViewInit, OnDestroy  {
 
   // Save the modified runner
   submitForm($event){
-    /*if(!moment(this.runnerToBeModified['birth_date'], "DD-MM-YYYY", true).isValid()){
-      swal({
-          title: 'Date de naissance invalide !',
-          text: "Format: JJ-MM-AA",
-          type: 'warning'
-        });
-      return;
-    }*/
     if(this.runnerToBeModified['tag'])
       this.runnerToBeModified['tag']['num'] = parseInt(this.runnerToBeModified['tag']['num'])
     this._runnersService.update(this.runnerToBeModified).then(()=>{
@@ -184,7 +176,6 @@ export class RunnersComponent implements OnInit, AfterViewInit, OnDestroy  {
             console.log(error)
         });
     })
-    //this.onChange(true);
   }
 
   // Cancel in modal
@@ -201,7 +192,7 @@ export class RunnersComponent implements OnInit, AfterViewInit, OnDestroy  {
   // Remove in list
   // ##################
 
-  remove(key:string){
+  remove(runnerId){
       swal({
           title: 'Êtes-vous sûr ?',
           text: "Les données ne pourront plus être récupérées!",
@@ -212,7 +203,7 @@ export class RunnersComponent implements OnInit, AfterViewInit, OnDestroy  {
           cancelButtonText: 'Annuler',
           confirmButtonText: 'Confirmer'
       }).then(()=> {
-          this._runnersService.remove(key);
+          this._runnersService.remove(runnerId);
           swal(
               'Supprimé!',
               'Le participant a été supprimé.',

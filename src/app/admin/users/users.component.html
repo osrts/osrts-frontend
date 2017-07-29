@@ -1,0 +1,79 @@
+<div class="ui container">
+  <table class="ui striped compact unstackable table" *ngIf="users">
+    <thead>
+      <tr class="center aligned">
+        <th>
+          Nom
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Date création
+        </th>
+        <th>
+          Date dernière modification
+        </th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <div class="ui active huge inverted text loader" *ngIf="!loaded">Chargement</div>
+    <tbody *ngIf="loaded">
+      <!-- DATA -->
+      <tr *ngFor="let user of users" class="center aligned">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.createdAt}}</td>
+        <td>{{user.updatedAt}}</td>
+        <td>
+          <div class="ui buttons">
+            <button name="edit-runner" class="ui icon primary button" (click)="clickModify(user)"><i class="edit icon"></i></button>
+            <button name="remove-runner" class="ui icon red button" (click)="remove(user._id)" [class.disabled]="users.length==1"><i class="delete icon"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Create new user button -->
+  <div class="ui basic center aligned vertical segment" id="segment-button">
+    <button class="ui primary big button" (click)="clickAdd()">Créer un nouveau admin</button>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="ui modal modal-user">
+  <div class="header">
+      <h2 class="ui centered header" *ngIf="action=='add'">Nouveau admin</h2>
+      <h2 class="ui centered header" *ngIf="action=='edit'">Modification</h2>
+  </div>
+  <div class="content">
+    <form class="ui form" (submit)="submitForm($event)" name="formUser">
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Nom</label>
+          <input type="text" name="nom" placeholder="" [(ngModel)]="userToBeModified.name">
+        </div>
+        <div class="eight wide field">
+          <label>Email</label>
+          <input type="text" name="email" placeholder="test@test.test" [(ngModel)]="userToBeModified.email" required>
+        </div>
+      </div>
+      <div class="inline fields">
+        <div class="eight wide field">
+          <label>Mot de passe</label>
+          <input type="password" name="password" placeholder="" [(ngModel)]="userToBeModified.password" required>
+        </div>
+        <div class="eight wide field">
+          <label>Confirmation mot de passe</label>
+          <input type="password" name="passwordConfirmation" placeholder="" [(ngModel)]="userToBeModified.passwordConfirmation" required>
+        </div>
+      </div>
+      <div class="ui basic center aligned segment">
+        <button name="cancel" type="button" class="ui big button" (click)="clickCancel()">Annuler</button>
+        <button name="create" type="submit" class="ui primary big button" *ngIf="action=='add'">Créer</button>
+        <button name="edit" type="submit" class="ui primary big button" *ngIf="action=='edit'">Modifier</button>
+      </div>
+    </form>
+  </div>
+</div>

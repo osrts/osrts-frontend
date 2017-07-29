@@ -8,7 +8,7 @@ import { ResultsService } from '../services/results/results.service';
 import { CheckpointsService } from '../services/checkpoints/checkpoints.service';
 import { SocketService } from '../services/feathers.service';
 
-import * as moment from 'moment/moment';
+import * as moment from 'moment';
 import 'moment/locale/fr';
 moment.locale('fr');
 
@@ -32,7 +32,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   // Checkpoints
   checkpoints=[];
   // Day
-  date:String;
+  date:any;
   momentDate:any;
   // Filtering
   filters={nameFilter:"", genderFilter: "", teamNameFilter: "", checkpointsFilter: []};
@@ -102,7 +102,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
     }
     query['$skip'] = (this.currentPage-1)*this._resultsService.NB_RESULTS;
     query['$limit'] = this._resultsService.NB_RESULTS;
-    console.log(query)
     this._resultsService.find({query: query});
   }
 

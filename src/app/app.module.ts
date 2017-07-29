@@ -42,7 +42,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
             { path: 'login', component: LoginComponent, canActivate: [UnauthGuard]},
             { path: 'admin', loadChildren: './admin/admin.module#AdminModule' , canActivate: [AuthGuard] },//() => AdminModule
             { path: '**', component: PageNotFoundComponent }
-        ], { useHash: true })
+        ])
     ],
     providers: [SocketService, AuthGuard, UnauthGuard],
     bootstrap: [AppComponent]
