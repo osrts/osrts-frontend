@@ -26,10 +26,10 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy  {
   // Action for modal
   action="";
   // User to be modified
-  userToBeModified={};
+  emptyUser= {name: "", email: "", password: "", passwordConfirmation: ""};
+  userToBeModified = {name: "", email: "", password: "", passwordConfirmation: ""};
 
   constructor(private _usersService: UsersService) {
-
   }
 
   ngOnInit(){
@@ -107,7 +107,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy  {
   // Cancel in modal
   clickCancel(){
     jQuery('.ui.modal-user').modal('hide');
-    this.userToBeModified={};
+    this.userToBeModified = this.emptyUser;
     this.action='';
   }
 
