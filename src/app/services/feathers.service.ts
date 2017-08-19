@@ -12,7 +12,9 @@ const authentication = require('feathers-authentication-client');
 const localstorage = require('feathers-localstorage');
 const superagent = require('superagent');
 
-const HOST = 'http://localhost:3030'; // Your base server URL here
+const environment = require('../../environments/environment');
+
+const HOST = environment.socketUrl; // Your base server URL here
 
 @Injectable()
 export class SocketService {
