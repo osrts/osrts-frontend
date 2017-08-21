@@ -12,7 +12,7 @@ const authentication = require('feathers-authentication-client');
 const localstorage = require('feathers-localstorage');
 const superagent = require('superagent');
 
-const environment = require('../environment');
+const environment = require('../../environments/environment');
 
 const HOST = environment.environment.socketUrl; // Your base server URL here
 
