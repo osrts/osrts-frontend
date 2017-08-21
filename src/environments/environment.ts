@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  socketUrl: 'http://localhost:3030'
+  socketUrl: "http://localhost:3030"
 };
