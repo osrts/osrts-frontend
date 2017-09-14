@@ -17,7 +17,7 @@ declare var jQuery:any;
 })
 export class AppComponent implements AfterViewInit {
 
-  constructor(private titleService: Title, private router: Router, private auth: SocketService) {
+  constructor(private titleService: Title, private router: Router, public auth: SocketService) {
     this.titleService.setTitle("Game of Trails - résultats");
   }
 

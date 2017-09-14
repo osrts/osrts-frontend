@@ -18,6 +18,22 @@ export class AdminComponent implements AfterViewInit {
 
   constructor(private socketService: SocketService, private router: Router) { }
 
+  signOut(){
+      swal({
+          title: '',
+          text: "Êtes vous sûr de vouloir vous déconnecter ?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Annuler',
+          confirmButtonText: 'Déconnexion'
+      }).then(()=> {
+          this.socketService.logout();
+          this.router.navigate(['/']);
+      }).catch(e => {});
+  }
+
   showMobileMenu(){
     jQuery('#mobile-menu').show();
   }
