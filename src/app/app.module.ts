@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { ResultsComponent } from './results/results.component';
 
 import { SocketService } from './services/feathers.service';
+import { RaceService } from './services/race/race.service';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -44,7 +45,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
             { path: '**', component: PageNotFoundComponent }
         ], {useHash: true})
     ],
-    providers: [SocketService, AuthGuard, UnauthGuard],
+    providers: [SocketService, AuthGuard, UnauthGuard, RaceService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

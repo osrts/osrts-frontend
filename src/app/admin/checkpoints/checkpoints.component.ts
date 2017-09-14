@@ -45,7 +45,7 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
         });
         this.raceSubscription = this._raceService.raceSubject.subscribe((data) => {
             this.colors = data.tagsColor;
-            console.log(this.colors)
+            console.log(this.colors);
         });
         this._raceService.get();
         this.find();
@@ -79,19 +79,19 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
                 'Supprimé!',
                 'Le checkpoint a été supprimé.',
                 'success'
-            )
+            );
         });
     }
 
     // Function called when a change is detected at a checkbox. It updates in the database the data
     changeCheckbox(checkpoint) {
         checkpoint.used = !checkpoint.used;
-        this._checkpointsService.update(checkpoint)
+        this._checkpointsService.update(checkpoint);
     }
 
     // Function that opens the modal for modifying a checkpoint
     openModal(checkpoint) {
-        Object.assign(this.checkpointToBeModified, checkpoint)
+        Object.assign(this.checkpointToBeModified, checkpoint);
         // this.checkpointToBeModified = checkpoint;
         jQuery('.ui.modal-checkpoint').modal('show');
     }
@@ -104,7 +104,7 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
 
     // Function that submits the data and save it in the database
     submitForm() {
-        this._checkpointsService.update(this.checkpointToBeModified)
+        this._checkpointsService.update(this.checkpointToBeModified);
         this.closeModal();
     }
 
@@ -117,12 +117,12 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
     }
 
     insertTime() {
-        console.log("Insert time")
-        console.log(this.modalTimes)
+        console.log("Insert time");
+        console.log(this.modalTimes);
         var time = moment();
-        time.hour(this.modalTimes.time.split(':')[0])
-        time.minute(this.modalTimes.time.split(':')[1])
-        time.second(this.modalTimes.time.split(':')[2])
+        time.hour(this.modalTimes.time.split(':')[0]);
+        time.minute(this.modalTimes.time.split(':')[1]);
+        time.second(this.modalTimes.time.split(':')[2]);
 
         this._timesService.create({
             timestamp: time.toISOString(),
@@ -132,10 +132,11 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
                 color: this.modalTimes.color
             }
         }).then((data)=>{
-            console.log("Succes")
+            console.log(time.toISOString());
+            console.log("Succes");
             this.modalTimes = {};
         }).catch((err)=>{
-            swal(err.message,"", 'error')
+            swal(err.message,"", 'error');
         });
     }
 
@@ -157,7 +158,7 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
             showCancelButton: false,
             confirmButtonText:
             'OK'
-        }).catch(() => { })
+        }).catch(() => { });
     }
     // Function that opens the modal for adding a checkpoint
     addCheckpoint() {
@@ -167,12 +168,12 @@ export class CheckpointsComponent implements OnInit, OnDestroy {
             showCancelButton: true,
             animation: false,
             progressSteps: ['1', '2']
-        })
+        });
 
         var steps = [
             'N° du checkpoint',
             'Nom du checkpoint'
-        ]
+        ];
 
         swal.queue(steps).then((result) => {
             var num = result[0];

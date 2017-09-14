@@ -10,26 +10,26 @@ export class RacesPage {
 
   editRace(){
       element(by.css('.edit-race')).click();
-      browser.sleep(1000)
+      browser.sleep(1000);
   }
 
   createRace(){
       element(by.css('.create-race')).click();
-      browser.sleep(1000)
+      browser.sleep(1000);
   }
 
   closeModal(){
       element(by.name('cancel')).click();
-      browser.sleep(1000)
+      browser.sleep(1000);
   }
 
   saveModal(){
       element(by.name('create')).click();
-      browser.sleep(1000)
+      browser.sleep(1000);
   }
-  upadateModal(){
+  updateModal(){
       element(by.name('edit')).click();
-      browser.sleep(1000)
+      browser.sleep(1000);
   }
 
   getModalTitle(){
@@ -37,7 +37,7 @@ export class RacesPage {
   }
 
   getModalClass(){
-      return element(by.css('.modals')).getAttribute('class')
+      return element(by.css('.modals')).getAttribute('class');
   }
 
   getSweetTitle(){
@@ -54,7 +54,12 @@ export class RacesPage {
   }
 
   setValue(name, val){
-      element(by.name(name)).clear()
+      element(by.name(name)).clear();
       element(by.name(name)).sendKeys(val);
+  }
+
+  // Used to clear the focus and remove the "date pickers"
+  clearFocus(name){
+    element(by.name(name)).click();
   }
 }

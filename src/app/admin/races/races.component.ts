@@ -55,6 +55,14 @@ export class RacesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(){
     jQuery('.ui.modal-race').modal({closable: false});
+    jQuery('[data-toggle="datepicker_from"]').datepicker({format: 'dd-mm-yyyy', language: 'fr-FR'});
+    jQuery('[data-toggle="datepicker_to"]').datepicker({format: 'dd-mm-yyyy', language: 'fr-FR'});
+    jQuery('[data-toggle="datepicker_from"]').on('pick.datepicker', (e) => {
+      this.raceToBeModified.from = moment(e.date).format('DD-MM-YYYY');
+    });
+    jQuery('[data-toggle="datepicker_to"]').on('pick.datepicker', (e) => {
+      this.raceToBeModified.to  = moment(e.date).format('DD-MM-YYYY');
+    });
   }
 
   clickOpenForm(newAction:string){
@@ -99,8 +107,8 @@ export class RacesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   checkDates(){
     var momentFrom = moment(this.raceToBeModified.from, "DD-MM-YYYY", true);
-    var momentTo = moment(this.raceToBeModified.to, "DD-MM-YYYY", true)
-    return momentFrom.isValid() && momentTo.isValid() && momentFrom.isBefore(momentTo);
+    var momentTo = moment(this.raceToBeModified.to, "DD-MM-YYYY", true);
+    return momentFrom.isValid() && momentTo.isValid() && momentFrom.isSameOrBefore(momentTo);
   }
 
   ngOnDestroy(){

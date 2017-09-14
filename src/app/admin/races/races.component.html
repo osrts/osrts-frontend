@@ -57,11 +57,11 @@
       <div class="inline fields">
         <div class="eight wide field">
           <label>Du</label>
-          <input type="text" name="from" placeholder="JJ-MM-AAAA" [(ngModel)]="raceToBeModified.from" required>
+          <input data-toggle="datepicker_from" type="text" name="from" placeholder="JJ-MM-AAAA" [(ngModel)]="raceToBeModified.from" required>
         </div>
         <div class="eight wide field">
           <label>au</label>
-          <input type="text" name="to" placeholder="JJ-MM-AAAA" [(ngModel)]="raceToBeModified.to" required>
+          <input  data-toggle="datepicker_to" type="text" name="to" placeholder="JJ-MM-AAAA" [(ngModel)]="raceToBeModified.to" required>
         </div>
       </div>
       <div class="field" *ngIf="action=='add'">

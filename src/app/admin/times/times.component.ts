@@ -42,6 +42,7 @@ export class TimesComponent implements OnInit, OnDestroy {
         this.subscription = this._timesService.timesSubject.subscribe((data) => {
             this.data = data;
             this.loaded = true;
+            console.log(data);
         });
 
         this.find();
@@ -60,7 +61,6 @@ export class TimesComponent implements OnInit, OnDestroy {
         this.query['$skip'] = (this.currentPage - 1) * TIMES_PER_PAGE;
         this.query['$limit'] = TIMES_PER_PAGE;
         this._timesService.find({ query: this.query });
-        console.log(this.query)
     }
 
     remove(key:string){
@@ -76,9 +76,7 @@ export class TimesComponent implements OnInit, OnDestroy {
         }).then(()=> {
             this._timesService.remove(key);
             this.find();
-            swal(
-                'Supprimé !'
-            )
+            swal('Supprimé !');
         }).catch(e => {});
     }
 
@@ -95,9 +93,7 @@ export class TimesComponent implements OnInit, OnDestroy {
         }).then(()=> {
             this._timesService.remove(null);
             this.find();
-            swal(
-                'Supprimé !'
-            )
+            swal('Supprimé !');
         }).catch(e => {});
     }
 
