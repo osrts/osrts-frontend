@@ -125,7 +125,10 @@
             </button>
           </div>
           <div class="column">
-            <button name="export-waves" class="ui button" [ngClass]="{'loading': generatingPdf}" (click)="generatePDF()">Exporter vague(s)</button>
+            <button name="export-waves" class="ui button" [ngClass]="{'loading': generatingPdf}" (click)="generatePDF()">Exporter vague(s) - PDF</button>
+          </div>
+          <div class="column">
+            <button name="export-waves" class="ui button" [ngClass]="{'loading': generatingPdf}" (click)="generateExcel()">Exporter vague(s) - Excel</button>
           </div>
         </div>
       </div>

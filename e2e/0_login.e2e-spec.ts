@@ -11,7 +11,7 @@ describe('Login Page', function() {
     browser.waitForAngular();
     browser.sleep(500);
     browser.get('/#/login');
-    expect(element(by.css('.page-title')).getText()).toEqual("Connexion à l'espace admin");
+    expect(element(by.css('.page-title')).getText()).toEqual('Connexion à l\'espace admin');
   });
 
   it('should login successfully', () => {
@@ -21,10 +21,12 @@ describe('Login Page', function() {
     element(by.css('.password')).sendKeys('test');
     expect(element(by.css('form')).getAttribute('class')).toMatch('ng-valid');
     element(by.css('form button')).click();
+    browser.sleep(1000);
+    // expect(browser.getCurrentUrl()).toContain('/#/admin');
     return browser.driver.wait(function() {
           return browser.driver.getCurrentUrl().then(function(url) {
               return /admin/.test(url);
           });
-    }, 10000);
+    }, 5000);
   });
 });

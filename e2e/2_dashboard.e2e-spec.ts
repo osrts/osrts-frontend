@@ -21,7 +21,7 @@ describe('Dashboard Page', function() {
 
   it('should open modal "import runners"', () => {
     element(by.name('import-runners')).click();
-    var fileToUpload = '../test-data.xlsx';
+    var fileToUpload = '../test-data2.xlsx';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     element(by.css('input[type="file"]')).sendKeys(absolutePath);
     browser.sleep(500)
