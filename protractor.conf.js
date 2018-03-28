@@ -10,7 +10,10 @@ exports.config = {
     './e2e/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    'chromeOptions': {
+      args: ['--disable-browser-side-navigation']
+    },
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',

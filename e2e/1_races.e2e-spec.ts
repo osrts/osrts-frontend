@@ -5,10 +5,10 @@ import { RealTimeRacingSystemPage } from './app.po';
 import { browser, element, by, } from 'protractor';
 import { RacesPage } from './races.po';
 
-describe('Races Page', function() {
+describe('Races Page', () => {
     let page: RacesPage;
 
-    beforeEach(() => {
+    beforeAll(() => {
         page = new RacesPage();
     });
 
@@ -19,18 +19,18 @@ describe('Races Page', function() {
 
     it('should open races page', () => {
         browser.get('/#/admin/races');
-        browser.sleep(500)
+        browser.sleep(500);
         expect(browser.getCurrentUrl()).toContain('/#/admin/races');
     });
 
     it('should open modal - new race', () => {
-        page.createRace()
+        page.createRace();
         expect(page.getModalClass()).toMatch('visible');
         expect(page.getModalTitle()).toEqual('Nouvelle course');
     });
 
     it('should close modal - new race', () => {
-        page.closeModal()
+        page.closeModal();
         expect(page.getModalClass()).toMatch('hidden');
     });
 
@@ -43,9 +43,9 @@ describe('Races Page', function() {
         expect(element(by.name('create')).getAttribute('class')).toMatch('disabled');
         element(by.name('hasChecked')).click();
         expect(element(by.name('create')).getAttribute('class')).not.toMatch('disabled');
-        page.saveModal()
+        page.saveModal();
         expect(page.getSweetTitle()).toEqual('Les dates ne sont pas valides !');
-        page.closeSweet()
+        page.closeSweet();
     });
 
     it('should fail to create new race 2 - wrong date (15-04-2017 - 14-04-2017)', () => {
@@ -63,7 +63,7 @@ describe('Races Page', function() {
         page.setValue('from', '01-04-2017');
         page.setValue('to', '02-04-2017');
         page.clearFocus('place');
-        page.saveModal()
+        page.saveModal();
         expect(page.getModalClass()).toMatch('hidden');
         expect(element(by.css('.race-place')).getText()).toEqual('Bruxelles');
         expect(element(by.css('.race-from')).getText()).toEqual('01-04-2017');
@@ -91,7 +91,7 @@ describe('Races Page', function() {
         page.setValue('to', '06-05-2017');
         page.clearFocus('place');
         element(by.name('hasChecked')).click();
-        page.saveModal()
+        page.saveModal();
         expect(page.getModalClass()).toMatch('hidden');
         expect(element(by.css('.race-place')).getText()).toEqual('LLN');
         expect(element(by.css('.race-from')).getText()).toEqual('05-05-2017');
@@ -103,9 +103,9 @@ describe('Races Page', function() {
         expect(element(by.name('place')).getAttribute('value')).toEqual('LLN');
         expect(element(by.name('from')).getAttribute('value')).toEqual('05-05-2017');
         expect(element(by.name('to')).getAttribute('value')).toEqual('06-05-2017');
-        page.setValue('place', 'Flemalle')
-        page.setValue('from', '02-09-2017')
-        page.setValue('to', '03-09-2017')
+        page.setValue('place', 'Flemalle');
+        page.setValue('from', '02-09-2017');
+        page.setValue('to', '03-09-2017');
         expect(element(by.name('place')).getAttribute('value')).toEqual('Flemalle');
         expect(element(by.name('from')).getAttribute('value')).toEqual('02-09-2017');
         expect(element(by.name('to')).getAttribute('value')).toEqual('03-09-2017');

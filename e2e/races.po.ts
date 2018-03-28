@@ -1,65 +1,65 @@
 // Open Source Race Timing System - Front-end
 // Wojciech Grynczel & Guillaume Deconinck
 
-import { browser, element, by, Key} from 'protractor';
+import { browser, element, by, Key } from 'protractor';
 
 export class RacesPage {
   navigateTo() {
     return browser.get('/#/admin/races');
   }
 
-  editRace(){
-      element(by.css('.edit-race')).click();
-      browser.sleep(1000);
+  editRace() {
+    element(by.css('.edit-race')).click();
+    browser.sleep(1000);
   }
 
-  createRace(){
-      element(by.css('.create-race')).click();
-      browser.sleep(1000);
+  createRace() {
+    element(by.css('.create-race')).click();
+    browser.sleep(1000);
   }
 
-  closeModal(){
-      element(by.name('cancel')).click();
-      browser.sleep(1000);
+  closeModal() {
+    element(by.name('cancel')).click();
+    browser.sleep(1000);
   }
 
-  saveModal(){
-      element(by.name('create')).click();
-      browser.sleep(1000);
+  saveModal() {
+    element(by.name('create')).click();
+    browser.sleep(1000);
   }
-  updateModal(){
-      element(by.name('edit')).click();
-      browser.sleep(1000);
-  }
-
-  getModalTitle(){
-      return element(by.css('.modal h2')).getText();
+  updateModal() {
+    element(by.name('edit')).click();
+    browser.sleep(1000);
   }
 
-  getModalClass(){
-      return element(by.css('.modals')).getAttribute('class');
+  getModalTitle() {
+    return element(by.css('.modal h2')).getText();
   }
 
-  getSweetTitle(){
-      return element(by.css('.swal2-title')).getText();
+  getModalClass() {
+    return element(by.css('.modals')).getAttribute('class');
   }
 
-  getSweetContent(){
-      return element(by.css('.swal2-content')).getText();
+  getSweetTitle() {
+    return element(by.css('.swal2-title')).getText();
   }
 
-  closeSweet(){
-      element.all(by.css('.swal2-confirm')).first().click();
-      browser.sleep(1000);
+  getSweetContent() {
+    return element(by.css('.swal2-content')).getText();
   }
 
-  setValue(name, val){
-      element(by.name(name)).clear();
-      element(by.name(name)).sendKeys(val);
+  closeSweet() {
+    element.all(by.css('.swal2-confirm')).first().click();
+    browser.sleep(1000);
+  }
+
+  setValue(name, val) {
+    element(by.name(name)).clear();
+    element(by.name(name)).sendKeys(val);
   }
 
   // Used to clear the focus and remove the "date pickers"
-  clearFocus(name){
+  clearFocus(name) {
     element(by.name(name)).click();
   }
 }
